@@ -7,8 +7,13 @@
 
 
 {% block content %}
-Willkomen a Pixarfly
-<div id="tweets">
+<div class="row-fluid text-center">
+    <div class="col">
+        <h1>Willkomen a Pixarfly</h1>
+    </div>
+</div>
+
+<div class="row" id="tweets">
     Replace me
 </div>
 <script>
@@ -30,7 +35,7 @@ Willkomen a Pixarfly
             return "<button class='btn btn-primary btn-small' onclick=handleLike(" + tweet.id + "," + tweet.likes + ")>" + tweet.likes + " Likes</button>"
     }
     function formatTweetObj(tweet){ //This function formats the tweet objects to be rendered in the page
-            var formatted = "<div class='mb-4 tweet' id='tweet-" + tweet.id + "'><p>" + tweet.content + "</p>" +
+            var formatted = "<div class='col-12 col-md-10 mx-auto border rounded text-center py-3 mb-4 tweet' id='tweet-" + tweet.id + "'><p>" + tweet.content + "</p>" +
                 "<div class='btn-group mb-4'>" + likeBtn(tweet) + 
                     "</div></div>"
             return formatted
