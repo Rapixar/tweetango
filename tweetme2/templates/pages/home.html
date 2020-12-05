@@ -15,23 +15,37 @@ Willkomen a Pixarfly
     const tweetsElement = document.getElementById("tweets") //get an html element
     tweetsElement.innerHTML = 'Loading...' //set the new html in that element specified by ID
 
-    const xhr = new XMLHttpRequest();
-    const method = 'GET'
-    const url = "/tweets"
-    const responseType = "json"
+    const xhr = new XMLHttpRequest(); //initialize a new http request object
+    const method = 'GET' //set the type of request
+    const url = "/tweets" //set the url to make the request with
+    const responseType = "json" //set the response type
 
-    xhr.responseType = responseType
-    xhr.open(method, url)
-    xhr.onload = function() {
-        const serverResponse = xhr.response
-        var listedItems = serverResponse.response
-        //console.log(listedItems)
+    xhr.responseType = responseType //set the "responseType" attribute of the http request object
+    xhr.open(method, url) //open the url with the defined method/type of request
+    function handleLike (tweet_id, currentCount) { //set a function to handle the clicking of like button
+            console.log(tweet_id, currentCount)
+        }
+    function likeBtn(tweet){
+            //A function to render the like button per tweet
+            return "<button class='btn btn-primary btn-small' onclick=handleLike(" + tweet.id + "," + tweet.likes + ")>" + tweet.likes + " Likes</button>"
+    }
+    function formatTweetObj(tweet){ //This function formats the tweet objects to be rendered in the page
+            var formatted = "<div class='mb-4 tweet' id='tweet-" + tweet.id + "'><p>" + tweet.content + "</p>" +
+                "<div class='btn-group mb-4'>" + likeBtn(tweet) + 
+                    "</div></div>"
+            return formatted
+        }
+    xhr.onload = function() { //this attribute defines what's to be done after loading the json data from the backend response
+        const serverResponse = xhr.response //sets the backend response attribute to a variable 
+        var listedItems = serverResponse.response //puts the response in an array
         var finalTweetStr = ""
         var i;
         for(i = 0; i<listedItems.length; i++) {
-            console.log(i)
-            console.log(listedItems[i])
+            var tweetObject = listedItems[i] //Takes the iteration of tweets
+            var currentItem = formatTweetObj(tweetObject) //Formats the tweet iterations
+            finalTweetStr += currentItem //Adds tweet iteration to string object NB: tweet is already formatted
         }
+        tweetsElement.innerHTML = finalTweetStr //sets the html to be the iteration of the tweet objects
     }
     xhr.send()
 </script>
